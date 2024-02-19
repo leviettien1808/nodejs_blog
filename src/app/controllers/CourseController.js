@@ -12,6 +12,20 @@ class CourseController {
             )
             .catch(next);
     }
+    // [GET] /courses/create
+    create(req, res, next) {
+        res.render('courses/create');
+    }
+    // [POST] /courses/store
+    store(req, res, next) {
+        const formData = req.body;
+        formData.image = `https://www.youtube.com/embed/${req.body.videoId}`;
+        const course = new Course(formData);
+        course
+            .save()
+            .then(() => res.redirect('/'))
+            .catch((error) => {});
+    }
 }
 
 module.exports = new CourseController();
